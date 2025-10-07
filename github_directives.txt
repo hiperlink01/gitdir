@@ -1,0 +1,43 @@
+install git
+configure personal data
+	-> git config --global user.name "<writenamehere>"
+	-> git config --global user.email "<writeemailhere>"
+
+create account on github
+	-> as of May 2025, must setup 2FA to push code
+
+check if there are any ssh keys
+	-> ls ~/.ssh
+generate ssh keys
+	-> ssh-keygen -t ed25519 -C "<writeemailhere>"
+	-> if one or more keys already exists, the file that stores it must be custom named; i.e., must change default file location
+	-> secure passphrase may or not be entered
+run ssh agent
+	-> exec ssh-agent bash (worked on debian)
+add key to agent
+	->ssh-add ~/.ssh/<writeprivatekeyfilehere>
+
+add key to github
+	->on github, click on profile picture, go to settings->SSH and GPG Keys
+	->add new ssh key
+	->copy-paste contents of PUBLIC KEY (the twin file ending with *.pub) into the text box
+	->save key
+
+create remote repo on github
+	->on github, click Create new, select new repository
+	->fill up info
+	->save
+
+initiate local repository tracking
+	->go to or create directory to be tracked
+	->git init
+	->good idea to rename local repo branch name to that of the remote repo you want the code to be pushed to
+	->so: git branch -m "<remotebranchname>" (this will make the local branch have the same name of remote branch; I'll just call <branchname> from now on)
+
+
+set the remote repository
+	->git remote add <aliasforremoterepo> <remotereposshurl>
+	->git pull <aliasforremoterepo> <branchname> (may end command with option: --allow-unrelated-histories if related error happens)
+	->git branch --set-upstream-to=<aliasforremoterepo>/<branchname>
+
+now, to push code: write stuff, stage changes (git add <dirsorfilestostage>), commit changes (git commit -m "<commitdescription>"), push changes (git push)
